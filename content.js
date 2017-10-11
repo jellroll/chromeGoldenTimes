@@ -1,12 +1,27 @@
-var elements = document.getElementsByTagName('*');
+var responseAction;
+
+chrome.runtime.sendMessage({checkForEnabled: "Performing a check"}, function(response) {
+    responseAction = response.action;
+    
+    if (responseAction == true) {
+        toggleNames();
+    } else {
+        toggleNames();
+    }
+    
+});
 
 
-var names = [   ["Donald Trump","Dorothy Zbornak"],
-                ["Trump","Zbornak"],
+function toggleNames() {
+
+    var elements = document.getElementsByTagName('*');
+
+    var names = [["Donald Trump","Dorothy Zbornak"],
+                 ["Trump","Zbornak"],
                 ["Mr. Trump","Ms. Zbornak"],
                 ["Melania Trump","Stanley Zbornak"],
                 ["Ms. Trump","Mr.Zbornak"],
-                ["Mrs. Trump","Mr.Zbornak"],
+                ["Mrs. Trump","Mr. Zbornak"],
                 ["Mike Pence","Sophia Petrillo"],
                 ["Mr. Pence","Mrs. Petrillo"],
                 ["Pence","Petrillo"],
@@ -26,21 +41,22 @@ var names = [   ["Donald Trump","Dorothy Zbornak"],
                 ["Kushner","Little Zbornak"],
                 ["Ivanka Trump","Barbara Thorndyke"],
                 ["Ivanka","Barbara"],
-                ["Scaramucci","Coco"],
-                ["Anthony Scaramucci","Coco the Gay Cook (who only lasted one season)"],
+                ["Scaramucci","Peterson"],
+                ["Anthony Scaramucci","Arnie Peterson"],
                 ["John Kelly","Truby Steele"],
                 ["Mr. Kelly","Ms. Steele"],
                 ["Kelly","Steele"],
                 ["Sarah Huckabee Sanders","Bessie the Showbiz Chicken"],
-                ["Sarah Sanders","Bessie the Chicken"],
-                ["Sanders","Miss Bessie"],
+                ["Sarah Sanders","Bessie the Showbiz Chicken"],
                 ["Mrs. Sanders","Miss Bessie"],
                 ["Ms. Sanders","Miss Bessie"],
+                ["Sanders","Bessie"],
                 ["Kellyanne Conway","Enrique Mas"],
                 ["Ms. Conway","Mr. Mas"],
                 ["Conway","Mas"],
-                ["Vladimir Putin","Clayton Hollingsworth"],
-                ["Putin","Hollingsworth"],
+                ["Vladimir Putin","Coco the Gay Cook (who only lasted one episode)"],
+                ["Putin","Coco"],
+                ["Mr. Putin","Mr. Coco"],
                 ["Kim Jong-un","Johnny No-Thumbs"],
                 ["Kim Jong un","Johnny No-Thumbs"],
                 ["Jong-un","No-Thumbs"],
@@ -55,40 +71,66 @@ var names = [   ["Donald Trump","Dorothy Zbornak"],
                 ["James Comey","Bobby Hopkins"],
                 ["Comey","Hopkins"],
                 ["Neil Gorsuch","Little Sven from Sweden"],
-                ["Gorsuch","Sven"],
                 ["Mr. Gorsuch","Little Sven"],
+                ["Gorsuch","Sven"],
+                ["Paul Ryan","Bobby Hopkins (played by a young George Clooney)"],
+                ["Ryan","Hopkins"],
                 ["Washington","St. Olaf"],
                 ["White House","Rusty Anchor"]
 
-];
+            ];
+    
 
- for (var i = 0; i < names.length; i++) {
 
-    beforeName = names[i][0];
-    afterName = names[i][1];
+    for (var i = 0; i < names.length; i++) {
 
-    for (var j = 0; j < elements.length; j++) {
-        var element = elements[j];
+        if (responseAction == true) {
+            beforeName = names[i][0];
+            afterName = names[i][1];
+        } else {
+            beforeName = names[i][1];
+            afterName = names[i][0];
+        }
+        
+        
+        for (var j = 0; j < elements.length; j++) {
+            var element = elements[j];
 
-        for (var k = 0; k < element.childNodes.length; k++) {
-            var node = element.childNodes[k];
 
-            replaceNames(node, element, beforeName, afterName);
+            for (var k = 0; k < element.childNodes.length; k++) {
+                var node = element.childNodes[k];
 
+                replaceNames(node, element, beforeName, afterName);
+
+            }
         }
     }
 }
 
 
+
 function replaceNames(node, element, before, after) {
 
+    
     if (node.nodeType === 3) {
         var text = node.nodeValue;
         var regExInput = new RegExp(before, "g");
         var replacedText = text.replace(regExInput, after);           
 
+
+        
         if (replacedText !== text) {
             element.replaceChild(document.createTextNode(replacedText), node);
+        } else {
+
         }
     }
 }
+
+
+
+
+
+
+
+
