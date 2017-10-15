@@ -121,8 +121,10 @@ function replacePhotos() {
     
         console.log("theGirlsPhotos.length: " + theGirlsPhotos.length);
         
-        var images = document.getElementsByTagName('img');
-        var photoIndex = 0;
+        //var images = document.getElementsByTagName('img');
+        var images = document.querySelectorAll("img","figure");        
+        
+        let photoIndex = 0;
 
         for (var i = 0, l = images.length; i < l; i++) {
             
