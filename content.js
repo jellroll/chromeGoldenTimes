@@ -1,24 +1,27 @@
 
 // These names will eventually come from a database
-var names = [   ["Donald J. Trump","Dorothy Zbornak"],
+var names = [   ["POTUS","Dorothy Zbornak"],
+                ["Donald J. Trump","Dorothy Zbornak"],
                 ["Donald Trump","Dorothy Zbornak"],
                 ["Mr. Trump","Ms. Zbornak"],
                 ["Trump","Dorothy Zbornak"],
-                ["Melania Trump","Frieda Claxton"],
-                ["Melania","Frieda Claxton"],
-                ["Michael Pence","Sophia Petrillo"],
-                ["Mike Pence","Sophia Petrillo"],
-                ["Mr. Pence","Mrs. Petrillo"],
-                ["Pence","Petrillo"],
+                ["Melania Trump","Cousin Magda Yitchinson"],
+                ["Melania","Cousin Magda"],
+                ["Mrs. Trump","Cousin Magda"],
+                ["FLOTUS","Cousin Magda"],
+                ["Michael Pence","Stanley Zbornak"],
+                ["Mike Pence","Stan Zbornak"],
+                ["Mr. Pence","Mr. Zbornak"],
+                ["Pence","Stanley Zbornak"],
                 ["Betsy Devos","Rose Nylund"],
                 ["Devos","Nylund"],
                 ["Ben Carson","Miles Webber"],
                 ["Carson","Webber"],
                 ["Jeff Sessions","Big Daddy Hollingsworth"],
-                ["Sessions","Hollingsworth"],
-                ["Nikki Haley","Blanche Devereaux"],
-                ["Haley","Devereaux"],
-                ["Steve Bannon","Mario Lopez (Dorothy's prized pupil who was deported)"],
+                ["Sessions","Big Daddy Hollingsworth"],
+                ["Nikki Haley","Frieda Claxton"],
+                ["Haley","Claxton"],
+                ["Steve Bannon","Mario Lopez (Dorothy's prized pupil)"],
                 ["Bannon","Mario Lopez"],
                 ["Jared Kushner","Little Michael Zbornak"],
                 ["Kushner","Michael Zbornak"],
@@ -31,23 +34,27 @@ var names = [   ["Donald J. Trump","Dorothy Zbornak"],
                 ["Sarah Huckabee Sanders","Bessie the Showbiz Chicken"],
                 ["Sarah Sanders","Bessie the Showbiz Chicken"],
                 ["Sanders","Bessie"],
-                ["Mike Huckabee","Big Daddy Hollingsworth"],
-                ["Huckabee","Big Daddy Hollingsworth"],
-                ["Kellyanne Conway","Daisy the Sunshine Cadet (who stole Rose's teddy bear)"],
+                ["Mike Huckabee","Dreyfuss the Dog"],
+                ["Huckabee","Dreyfuss"],
+                ["Kellyanne Conway","Daisy the Sunshine Cadet"],
                 ["Conway","Daisy"],
-                ["Vladimir V. Putin", "Coco the Gay Cook (who lasted only one episode)"],
-                ["Vladimir Putin", "Coco the Gay Cook (who lasted only one episode)"],
+                ["Vladimir V. Putin", "Coco the Gay Cook"],
+                ["Vladimir Putin", "Coco the Gay Cook"],
                 ["Putin","Coco the Gay Cook"],
                 ["Kim Jong-un","Johnny No-Thumbs"],
                 ["Kim Jong un","Johnny No-Thumbs"],
                 ["Jong-un","No-Thumbs"],
-                ["Rex Tillerson","Dreyfuss the Dog"],
-                ["Tillerson","Dreyfuss"],
+                ["Rex Tillerson","Rex Huntington"],
+                ["Tillerson","Huntington"],
                 ["Jong-un","No-Thumbs"],
                 ["Stephen Miller","Raoul (Sophia's date to the banquet)"],
                 ["Miller","Raoul"],
-                ["Robert Mueller","Al Mullens"],
-                ["Robert S. Mueller","Al Mullens"],
+                ["Robert Mueller","Detective Sergeant Al Mullens"],
+                ["Robert S. Mueller","Detective Sergeant Al Mullens"],
+                ["Special Counsel Mueller","Detective Sergeant Mullens"],
+                ["Special Counsel Robert Mueller","Detective Sergeant Mullens"],
+                ["Special Counsel Robert S. Mueller","Detective Sergeant Mullens"],
+                ["Mr. Mueller","Detective Sergeant Mullens"],
                 ["Mueller","Mullens"],
                 ["James Comey","Bobby Hopkins"],
                 ["Comey","Hopkins"],
@@ -109,49 +116,29 @@ function toggle(enabled) {
 
 
 function replacePhotos() {
-
-    const galleryUrl = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=714d94e01a2f8290b2e404dc4e4da6a3&gallery_id=152943881-72157686071664832&extras=url_m&format=json&nojsoncallback=1";
-
-    let theGirlsPhotos = [];
-    
-    $.getJSON(galleryUrl, function(data) {
-        $.each(data.photos.photo, function(i,item){
-            theGirlsPhotos.push(item.url_m);
-        });
-    
-        console.log("theGirlsPhotos.length: " + theGirlsPhotos.length);
         
-        //var images = document.getElementsByTagName('img');
-        var images = document.querySelectorAll("img","figure");        
+    var images = document.querySelectorAll("img", "figure");        
         
-        let photoIndex = 0;
-
-        for (var i = 0, l = images.length; i < l; i++) {
+    for (var i = 0, l = images.length; i < l; i++) {
             
-            //if ($(images[i]).attr('class').indexOf('logo')) {
-            
-            //if (!$(images[i]).hasClass("main-logo")) {
-            if (!$(images[i]).hasClass("main-logo") && !$(images[i]).hasClass("wplogo")) {
+        if (!$(images[i]).hasClass("main-logo") && !$(images[i]).hasClass("wplogo")) {
                 
-                    // remove lazyloader attributes otherwise these pics get loaded after DOM load
-					if (images[i].hasAttribute('data-src')){
-						images[i].removeAttribute('data-src');	
-					};
-					if (images[i].hasAttribute('data-hi-res-src')){
-						images[i].removeAttribute('data-hi-res-src');	
-					};
-					if (images[i].hasAttribute('data-low-res-src')){
-						images[i].removeAttribute('data-low-res-src');	
-					};
-                
-                
-                    photoIndex = Math.floor(Math.random() * 50) + 0; // 50 total in the gallery 
-                    images[i].src = theGirlsPhotos[photoIndex];
+            // remove lazyloader attributes otherwise these pics get loaded after DOM load
+            if (images[i].hasAttribute('data-src')){
+				images[i].removeAttribute('data-src');	
             }
-            
-
+            if (images[i].hasAttribute('data-hi-res-src')){
+				images[i].removeAttribute('data-hi-res-src');	
+            }
+            if (images[i].hasAttribute('data-low-res-src')){
+				images[i].removeAttribute('data-low-res-src');	
+            }
+                
+            var index = Math.floor(Math.random() * 121) + 0; // currently 122 photos available
+            //images[i].src = theGirlsPhotos[photoIndex];
+            images[i].src = chrome.extension.getURL('/images/golden' + index + '.jpg');
         }
-    });
+    }
 }
 
 function removePhotos() {
