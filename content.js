@@ -43,7 +43,8 @@ function toggleNames(enabled) {
         
                 for (var j = 0; j < storyHeading.childNodes.length; j++) {
                     var node = storyHeading.childNodes[j];
-
+		
+		    // if the node type is text of an attribute or element, and it has a value
                     if (node.nodeType === 3 && node.nodeValue) {
                         
                         var text = node.nodeValue;
